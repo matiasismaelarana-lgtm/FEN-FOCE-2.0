@@ -1,2 +1,1997 @@
-# FEN-FOCE-2.0
-Aplicacion de prevencion del fenomeno del niño
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEN FORCE 2.0</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         PANTALLA DE INICIO
+    ========================== -->
+    <section id="inicio" class="pantalla activa">
+        <div class="fondo-inicio"></div>
+
+        <div class="logo">
+            <div class="logo-icono">🌊</div>
+            <h1>FEN <span>FORCE</span></h1>
+            <p>PREPARADOS PARA PROTEGER</p>
+        </div>
+
+        <div class="menu-principal">
+            <button id="btnJugar" class="btn principal">🎮 JUGAR</button>
+            <button id="btnContinuar" class="btn">💾 CONTINUAR</button>
+            <button id="btnComoJugar" class="btn">📖 CÓMO JUGAR</button>
+            <button id="btnCreditos" class="btn">👥 CRÉDITOS</button>
+        </div>
+
+        <p class="version">FEN FORCE 2.0 • Fase 1</p>
+    </section>
+
+
+    <!-- =========================
+         PANTALLA CÓMO JUGAR
+    ========================== -->
+    <section id="comoJugar" class="pantalla">
+        <div class="panel">
+            <h2>📖 CÓMO JUGAR</h2>
+
+            <div class="info-grid">
+                <div>
+                    <span>🎯</span>
+                    <h3>Objetivo</h3>
+                    <p>Completa las misiones y llega a la zona segura.</p>
+                </div>
+
+                <div>
+                    <span>❤️</span>
+                    <h3>Vidas</h3>
+                    <p>Evita acciones peligrosas para conservar tus vidas.</p>
+                </div>
+
+                <div>
+                    <span>⭐</span>
+                    <h3>Puntos</h3>
+                    <p>Realiza buenas acciones para conseguir más puntos.</p>
+                </div>
+
+                <div>
+                    <span>🎒</span>
+                    <h3>Suministros</h3>
+                    <p>Utiliza correctamente tus recursos durante las misiones.</p>
+                </div>
+            </div>
+
+            <p class="controles">
+                🖥️ PC: usa WASD o las flechas del teclado.<br>
+                📱 Celular: utiliza los controles táctiles.
+            </p>
+
+            <button class="btn volver" data-volver="inicio">← VOLVER</button>
+        </div>
+    </section>
+
+
+    <!-- =========================
+         PANTALLA DE CRÉDITOS
+    ========================== -->
+    <section id="creditos" class="pantalla">
+        <div class="panel">
+            <h2>👥 FEN FORCE</h2>
+
+            <p>
+                Videojuego educativo sobre prevención ante
+                emergencias relacionadas con lluvias intensas,
+                inundaciones y huaicos.
+            </p>
+
+            <div class="creditos-box">
+                <p>🎮 Proyecto escolar</p>
+                <p>🌎 Educación para la prevención</p>
+                <p>🛡️ Preparación ante emergencias</p>
+            </div>
+
+            <button class="btn volver" data-volver="inicio">← VOLVER</button>
+        </div>
+    </section>
+
+
+    <!-- =========================
+         PANTALLA DEL JUEGO
+    ========================== -->
+    <section id="juego" class="pantalla">
+
+        <!-- HUD -->
+        <header class="hud">
+
+            <div class="hud-item">
+                ❤️
+                <span id="vidas">3</span>
+            </div>
+
+            <div class="hud-item">
+                ⭐
+                <span id="puntos">0</span>
+            </div>
+
+            <div class="hud-item">
+                🎒
+                <span id="suministros">5</span>
+            </div>
+
+            <div class="hud-item nivel">
+                NIVEL <span id="numeroNivel">1</span>
+            </div>
+
+            <button id="btnPausa" class="btn-pausa">⏸️</button>
+
+        </header>
+
+
+        <!-- ZONA DEL JUEGO -->
+        <main id="zonaJuego">
+
+            <div id="mensajeEvento" class="mensaje-evento">
+                🚨 ¡PREPÁRATE!
+            </div>
+
+            <div id="mapa">
+
+                <div class="titulo-mapa">
+                    🏫 COLEGIO
+                </div>
+
+                <div class="objeto aula aula1">🪑</div>
+                <div class="objeto aula aula2">🪑</div>
+                <div class="objeto aula aula3">🪑</div>
+
+                <div class="puerta">🚪</div>
+
+                <div id="jugador">🧑‍🎓</div>
+
+                <div id="zonaSegura">
+                    🟢
+                    <strong>ZONA SEGURA</strong>
+                </div>
+
+                <div id="obstaculo">📦</div>
+
+                <div id="lluvia"></div>
+
+            </div>
+
+        </main>
+
+
+        <!-- CONTROLES CELULAR -->
+        <div id="controlesMovil">
+
+            <button class="control" data-dir="arriba">⬆️</button>
+
+            <div>
+                <button class="control" data-dir="izquierda">⬅️</button>
+                <button class="control" data-dir="abajo">⬇️</button>
+                <button class="control" data-dir="derecha">➡️</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PAUSA
+    ========================== -->
+    <div id="pantallaPausa" class="overlay">
+
+        <div class="panel pausa-panel">
+
+            <h2>⏸️ JUEGO EN PAUSA</h2>
+
+            <button id="btnReanudar" class="btn principal">
+                ▶️ REANUDAR
+            </button>
+
+            <button id="btnReiniciar" class="btn">
+                🔄 REINICIAR NIVEL
+            </button>
+
+            <button id="btnGuardar" class="btn">
+                💾 GUARDAR
+            </button>
+
+            <button id="btnSalir" class="btn">
+                🏠 SALIR AL MENÚ
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         VICTORIA
+    ========================== -->
+    <div id="pantallaVictoria" class="overlay">
+
+        <div class="panel">
+
+            <h2>🎉 ¡MISIÓN COMPLETADA!</h2>
+
+            <p id="mensajeVictoria">
+                Has llegado a la zona segura.
+            </p>
+
+            <p>
+                ⭐ Puntos: <strong id="puntosFinales">0</strong>
+            </p>
+
+            <button id="btnSiguiente" class="btn principal">
+                ➡️ SIGUIENTE NIVEL
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DERROTA
+    ========================== -->
+    <div id="pantallaDerrota" class="overlay">
+
+        <div class="panel">
+
+            <h2>💥 MISIÓN FALLIDA</h2>
+
+            <p>
+                Has perdido todas tus vidas.
+            </p>
+
+            <button id="btnIntentar" class="btn principal">
+                🔄 INTENTAR DE NUEVO
+            </button>
+
+            <button id="btnDerrotaMenu" class="btn">
+                🏠 MENÚ
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #06182b;
+    color: white;
+}
+
+
+/* =========================
+   PANTALLAS
+========================= */
+
+.pantalla {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.pantalla.activa {
+    display: flex;
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+#inicio {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fondo-inicio {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(4, 21, 40, 0.65),
+            rgba(0, 55, 95, 0.85)
+        ),
+        radial-gradient(
+            circle at 50% 20%,
+            #1ca3ec,
+            transparent 45%
+        );
+
+    z-index: -2;
+}
+
+.fondo-inicio::before {
+    content: "🌧️  🌊  ☁️  🌧️  🌊  ☁️";
+    position: absolute;
+    inset: 0;
+
+    font-size: 50px;
+    line-height: 130px;
+    opacity: 0.08;
+
+    animation: moverFondo 15s linear infinite;
+}
+
+@keyframes moverFondo {
+    from {
+        transform: translateY(-100px);
+    }
+
+    to {
+        transform: translateY(100px);
+    }
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-icono {
+    font-size: 70px;
+
+    animation:
+        flotar 2s ease-in-out infinite;
+}
+
+@keyframes flotar {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.logo h1 {
+    font-size: clamp(45px, 8vw, 90px);
+    letter-spacing: 5px;
+    text-shadow: 0 5px 20px #000;
+}
+
+.logo h1 span {
+    color: #20cfff;
+}
+
+.logo p {
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.menu-principal {
+    width: min(360px, 85%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px 20px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    transition:
+        transform 0.15s,
+        background 0.15s;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn.principal {
+    background: #087fce;
+}
+
+.btn.principal:hover {
+    background: #099be8;
+}
+
+.version {
+    position: absolute;
+    bottom: 15px;
+    opacity: 0.6;
+    font-size: 12px;
+}
+
+
+/* =========================
+   PANELES
+========================= */
+
+.panel {
+    width: min(900px, 90%);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    background: rgba(4, 24, 43, 0.95);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 22px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+}
+
+#comoJugar,
+#creditos {
+    justify-content: center;
+    align-items: center;
+}
+
+.panel h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.panel p {
+    line-height: 1.6;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-grid > div {
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 15px;
+}
+
+.info-grid span {
+    font-size: 40px;
+}
+
+.info-grid h3 {
+    margin: 10px 0;
+}
+
+.controles {
+    margin: 20px 0;
+}
+
+.volver {
+    margin-top: 20px;
+}
+
+.creditos-box {
+    margin-top: 20px;
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 15px;
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+.hud {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 10px 15px;
+
+    background: rgba(3, 19, 35, 0.95);
+
+    z-index: 20;
+}
+
+.hud-item {
+    padding: 10px 15px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    font-weight: bold;
+}
+
+.hud-item.nivel {
+    margin-left: auto;
+}
+
+.btn-pausa {
+    border: none;
+    background: #33475b;
+    color: white;
+
+    border-radius: 10px;
+
+    padding: 10px 14px;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+/* =========================
+   ZONA DEL JUEGO
+========================= */
+
+#zonaJuego {
+    position: relative;
+
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(30, 90, 60, 0.5),
+            rgba(20, 90, 110, 0.6)
+        );
+}
+
+
+/* =========================
+   MAPA
+========================= */
+
+#mapa {
+    position: relative;
+
+    width: min(900px, 92vw);
+    height: min(600px, 70vh);
+
+    background:
+        linear-gradient(
+            135deg,
+            #829b69,
+            #4f765c
+        );
+
+    border: 8px solid #253d4b;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Suelo */
+
+#mapa::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+}
+
+
+/* =========================
+   TÍTULO DEL MAPA
+========================= */
+
+.titulo-mapa {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    padding: 10px 15px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    z-index: 5;
+}
+
+
+/* =========================
+   OBJETOS
+========================= */
+
+.objeto {
+    position: absolute;
+
+    font-size: 40px;
+
+    z-index: 4;
+}
+
+.aula1 {
+    top: 35%;
+    left: 20%;
+}
+
+.aula2 {
+    top: 35%;
+    left: 30%;
+}
+
+.aula3 {
+    top: 35%;
+    left: 40%;
+}
+
+.puerta {
+    position: absolute;
+
+    right: 20px;
+    top: 50%;
+
+    font-size: 50px;
+}
+
+
+/* =========================
+   JUGADOR
+========================= */
+
+#jugador {
+    position: absolute;
+
+    left: 80px;
+    top: 80px;
+
+    font-size: 45px;
+
+    z-index: 10;
+
+    transition:
+        left 0.08s linear,
+        top 0.08s linear;
+}
+
+
+/* =========================
+   ZONA SEGURA
+========================= */
+
+#zonaSegura {
+    position: absolute;
+
+    right: 30px;
+    bottom: 30px;
+
+    width: 170px;
+    height: 110px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(20, 170, 80, 0.75);
+
+    border: 3px dashed white;
+
+    border-radius: 15px;
+
+    z-index: 5;
+
+    animation: zonaPulso 1.5s infinite;
+}
+
+@keyframes zonaPulso {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+
+/* =========================
+   OBSTÁCULO
+========================= */
+
+#obstaculo {
+    position: absolute;
+
+    left: 50%;
+    top: 55%;
+
+    font-size: 50px;
+
+    z-index: 6;
+}
+
+
+/* =========================
+   LLUVIA
+========================= */
+
+#lluvia {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.25;
+
+    background-image:
+        repeating-linear-gradient(
+            105deg,
+            transparent 0,
+            transparent 8px,
+            rgba(180, 230, 255, 0.8) 9px,
+            transparent 10px
+        );
+
+    background-size: 35px 35px;
+
+    animation: lluvia 0.5s linear infinite;
+
+    z-index: 15;
+}
+
+@keyframes lluvia {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 30px 60px;
+    }
+}
+
+
+/* =========================
+   MENSAJE DE EVENTO
+========================= */
+
+.mensaje-evento {
+    position: absolute;
+
+    top: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 12px 20px;
+
+    background: rgba(190, 30, 30, 0.9);
+
+    border-radius: 12px;
+
+    z-index: 50;
+
+    font-weight: bold;
+
+    animation: aparecer 0.3s;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+
+/* =========================
+   CONTROLES MÓVILES
+========================= */
+
+#controlesMovil {
+    position: fixed;
+
+    left: 20px;
+    bottom: 20px;
+
+    z-index: 100;
+
+    display: none;
+
+    text-align: center;
+}
+
+.control {
+    width: 55px;
+    height: 55px;
+
+    margin: 3px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: white;
+
+    font-size: 22px;
+
+    touch-action: manipulation;
+}
+
+
+/* =========================
+   OVERLAYS
+========================= */
+
+.overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    z-index: 200;
+}
+
+.overlay.activo {
+    display: flex;
+}
+
+.pausa-panel {
+    max-width: 450px;
+}
+
+.pausa-panel .btn {
+    margin-top: 10px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .logo h1 {
+        font-size: 45px;
+    }
+
+    .logo-icono {
+        font-size: 50px;
+    }
+
+    .hud {
+        height: 60px;
+        padding: 6px;
+        gap: 5px;
+    }
+
+    .hud-item {
+        padding: 7px;
+        font-size: 13px;
+    }
+
+    .hud-item.nivel {
+        margin-left: 0;
+    }
+
+    #zonaJuego {
+        height: calc(100vh - 60px);
+    }
+
+    #mapa {
+        width: 96vw;
+        height: 62vh;
+    }
+
+    #controlesMovil {
+        display: block;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+
+    #zonaSegura {
+        width: 130px;
+        height: 90px;
+        font-size: 12px;
+    }
+
+    #jugador {
+        font-size: 35px;
+    }
+}
+
+
+/* =========================
+   ANIMACIÓN DE DAÑO
+========================= */
+
+.daño {
+    animation: daño 0.3s;
+}
+
+@keyframes daño {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================
+   TEXTO DE GUARDADO
+========================= */
+
+.guardado {
+    position: fixed;
+
+    top: 80px;
+    right: 20px;
+
+    padding: 10px 15px;
+
+    background: rgba(20, 160, 80, 0.9);
+
+    border-radius: 10px;
+
+    z-index: 500;
+
+    animation: guardar 2s forwards;
+}
+
+@keyframes guardar {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+/* ==========================================
+   FEN FORCE 2.0
+   FASE 1 - SISTEMA BASE
+========================================== */
+
+
+/* ==========================================
+   VARIABLES DEL JUEGO
+========================================== */
+
+let nivelActual = 1;
+let vidas = 3;
+let puntos = 0;
+let suministros = 5;
+
+let juegoActivo = false;
+let juegoPausado = false;
+
+let posicionX = 80;
+let posicionY = 80;
+
+const velocidad = 12;
+
+
+/* ==========================================
+   NIVELES
+========================================== */
+
+const niveles = [
+    {
+        nombre: "Colegio",
+        objetivo: "Encuentra la zona segura."
+    },
+
+    {
+        nombre: "Casa",
+        objetivo: "Evacúa la vivienda."
+    },
+
+    {
+        nombre: "Calle",
+        objetivo: "Evita las zonas inundadas."
+    },
+
+    {
+        nombre: "Hospital",
+        objetivo: "Encuentra una ruta segura."
+    },
+
+    {
+        nombre: "Supermercado",
+        objetivo: "Evacúa antes de que aumente el agua."
+    },
+
+    {
+        nombre: "Estación",
+        objetivo: "Busca una salida segura."
+    },
+
+    {
+        nombre: "Edificio",
+        objetivo: "Evita las zonas peligrosas."
+    },
+
+    {
+        nombre: "Mercado",
+        objetivo: "Encuentra la salida."
+    },
+
+    {
+        nombre: "Parque",
+        objetivo: "Evita árboles durante la tormenta."
+    },
+
+    {
+        nombre: "Puente",
+        objetivo: "Encuentra una ruta alternativa."
+    },
+
+    {
+        nombre: "Zona urbana",
+        objetivo: "Evacúa la zona."
+    },
+
+    {
+        nombre: "Comunidad",
+        objetivo: "Ayuda a llegar a la zona segura."
+    },
+
+    {
+        nombre: "Centro deportivo",
+        objetivo: "Busca una salida."
+    },
+
+    {
+        nombre: "Municipalidad",
+        objetivo: "Encuentra el punto de reunión."
+    },
+
+    {
+        nombre: "Zona cercana al río",
+        objetivo: "Aléjate del agua."
+    },
+
+    {
+        nombre: "Barrio inundado",
+        objetivo: "Evita cruzar el agua."
+    },
+
+    {
+        nombre: "Zona de huaico",
+        objetivo: "Evacúa rápidamente."
+    },
+
+    {
+        nombre: "Evacuación nocturna",
+        objetivo: "Encuentra la ruta segura."
+    },
+
+    {
+        nombre: "Gran emergencia",
+        objetivo: "Protege a la comunidad."
+    },
+
+    {
+        nombre: "Protección de la comunidad",
+        objetivo: "Completa la misión final."
+    }
+];
+
+
+/* ==========================================
+   ELEMENTOS HTML
+========================================== */
+
+const pantallas = document.querySelectorAll(".pantalla");
+
+const inicio = document.getElementById("inicio");
+const juego = document.getElementById("juego");
+
+const btnJugar = document.getElementById("btnJugar");
+const btnContinuar = document.getElementById("btnContinuar");
+
+const btnPausa = document.getElementById("btnPausa");
+const btnReanudar = document.getElementById("btnReanudar");
+const btnReiniciar = document.getElementById("btnReiniciar");
+const btnGuardar = document.getElementById("btnGuardar");
+const btnSalir = document.getElementById("btnSalir");
+
+const btnSiguiente = document.getElementById("btnSiguiente");
+
+const btnIntentar = document.getElementById("btnIntentar");
+const btnDerrotaMenu = document.getElementById("btnDerrotaMenu");
+
+const jugador = document.getElementById("jugador");
+
+const zonaSegura = document.getElementById("zonaSegura");
+
+const pantallaPausa = document.getElementById("pantallaPausa");
+const pantallaVictoria = document.getElementById("pantallaVictoria");
+const pantallaDerrota = document.getElementById("pantallaDerrota");
+
+const vidasTexto = document.getElementById("vidas");
+const puntosTexto = document.getElementById("puntos");
+const suministrosTexto = document.getElementById("suministros");
+const nivelTexto = document.getElementById("numeroNivel");
+
+const puntosFinales = document.getElementById("puntosFinales");
+
+const mensajeEvento = document.getElementById("mensajeEvento");
+
+const mapa = document.getElementById("mapa");
+
+
+/* ==========================================
+   CAMBIAR PANTALLA
+========================================== */
+
+function mostrarPantalla(id) {
+
+    pantallas.forEach(pantalla => {
+        pantalla.classList.remove("activa");
+    });
+
+    const pantalla = document.getElementById(id);
+
+    if (pantalla) {
+        pantalla.classList.add("activa");
+    }
+}
+
+
+/* ==========================================
+   ACTUALIZAR HUD
+========================================== */
+
+function actualizarHUD() {
+
+    vidasTexto.textContent = vidas;
+
+    puntosTexto.textContent = puntos;
+
+    suministrosTexto.textContent = suministros;
+
+    nivelTexto.textContent = nivelActual;
+}
+
+
+/* ==========================================
+   INICIAR PARTIDA
+========================================== */
+
+function iniciarJuego() {
+
+    nivelActual = 1;
+
+    vidas = 3;
+
+    puntos = 0;
+
+    suministros = 5;
+
+    juegoActivo = true;
+
+    juegoPausado = false;
+
+    reiniciarPosicion();
+
+    actualizarHUD();
+
+    mostrarPantalla("juego");
+
+    mostrarMensaje(
+        "🚨 NIVEL 1: " + niveles[0].nombre
+    );
+
+    guardarProgreso();
+}
+
+
+/* ==========================================
+   CONTINUAR PARTIDA
+========================================== */
+
+function continuarJuego() {
+
+    const datos = localStorage.getItem("fenForceProgreso");
+
+    if (!datos) {
+
+        alert(
+            "No existe una partida guardada todavía."
+        );
+
+        return;
+    }
+
+    try {
+
+        const partida = JSON.parse(datos);
+
+        nivelActual = partida.nivel || 1;
+
+        vidas = partida.vidas ?? 3;
+
+        puntos = partida.puntos ?? 0;
+
+        suministros = partida.suministros ?? 5;
+
+        juegoActivo = true;
+
+        juegoPausado = false;
+
+        reiniciarPosicion();
+
+        actualizarHUD();
+
+        mostrarPantalla("juego");
+
+        mostrarMensaje(
+            "💾 Partida recuperada"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "No se pudo cargar la partida."
+        );
+    }
+}
+
+
+/* ==========================================
+   GUARDAR
+========================================== */
+
+function guardarProgreso() {
+
+    const partida = {
+
+        nivel: nivelActual,
+
+        vidas: vidas,
+
+        puntos: puntos,
+
+        suministros: suministros
+
+    };
+
+    localStorage.setItem(
+        "fenForceProgreso",
+        JSON.stringify(partida)
+    );
+
+    mostrarGuardado();
+}
+
+
+/* ==========================================
+   INDICADOR DE GUARDADO
+========================================== */
+
+function mostrarGuardado() {
+
+    const anterior =
+        document.querySelector(".guardado");
+
+    if (anterior) {
+        anterior.remove();
+    }
+
+    const texto =
+        document.createElement("div");
+
+    texto.className = "guardado";
+
+    texto.textContent =
+        "💾 Progreso guardado";
+
+    document.body.appendChild(texto);
+
+    setTimeout(() => {
+
+        texto.remove();
+
+    }, 2000);
+}
+
+
+/* ==========================================
+   PAUSA
+========================================== */
+
+function pausarJuego() {
+
+    if (!juegoActivo) {
+        return;
+    }
+
+    juegoPausado = true;
+
+    pantallaPausa.classList.add("activo");
+}
+
+
+function reanudarJuego() {
+
+    juegoPausado = false;
+
+    pantallaPausa.classList.remove("activo");
+}
+
+
+/* ==========================================
+   REINICIAR NIVEL
+========================================== */
+
+function reiniciarNivel() {
+
+    vidas = 3;
+
+    suministros = 5;
+
+    reiniciarPosicion();
+
+    actualizarHUD();
+
+    juegoPausado = false;
+
+    pantallaPausa.classList.remove("activo");
+
+    mostrarMensaje(
+        "🔄 Nivel reiniciado"
+    );
+}
+
+
+/* ==========================================
+   POSICIÓN INICIAL
+========================================== */
+
+function reiniciarPosicion() {
+
+    posicionX = 80;
+
+    posicionY = 80;
+
+    actualizarJugador();
+}
+
+
+/* ==========================================
+   ACTUALIZAR JUGADOR
+========================================== */
+
+function actualizarJugador() {
+
+    jugador.style.left =
+        posicionX + "px";
+
+    jugador.style.top =
+        posicionY + "px";
+
+    comprobarZonaSegura();
+}
+
+
+/* ==========================================
+   MOVIMIENTO
+========================================== */
+
+function moverJugador(direccion) {
+
+    if (!juegoActivo || juegoPausado) {
+        return;
+    }
+
+    const limiteX =
+        mapa.clientWidth - jugador.offsetWidth;
+
+    const limiteY =
+        mapa.clientHeight - jugador.offsetHeight;
+
+
+    if (direccion === "arriba") {
+        posicionY -= velocidad;
+    }
+
+    if (direccion === "abajo") {
+        posicionY += velocidad;
+    }
+
+    if (direccion === "izquierda") {
+        posicionX -= velocidad;
+    }
+
+    if (direccion === "derecha") {
+        posicionX += velocidad;
+    }
+
+
+    /* Evitar salir del mapa */
+
+    posicionX =
+        Math.max(
+            0,
+            Math.min(posicionX, limiteX)
+        );
+
+    posicionY =
+        Math.max(
+            0,
+            Math.min(posicionY, limiteY)
+        );
+
+
+    actualizarJugador();
+}
+
+
+/* ==========================================
+   TECLADO
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (!juegoActivo || juegoPausado) {
+            return;
+        }
+
+        switch (event.key.toLowerCase()) {
+
+            case "arrowup":
+            case "w":
+
+                event.preventDefault();
+
+                moverJugador("arriba");
+
+                break;
+
+
+            case "arrowdown":
+            case "s":
+
+                event.preventDefault();
+
+                moverJugador("abajo");
+
+                break;
+
+
+            case "arrowleft":
+            case "a":
+
+                event.preventDefault();
+
+                moverJugador("izquierda");
+
+                break;
+
+
+            case "arrowright":
+            case "d":
+
+                event.preventDefault();
+
+                moverJugador("derecha");
+
+                break;
+
+
+            case "escape":
+
+                pausarJuego();
+
+                break;
+        }
+    }
+);
+
+
+/* ==========================================
+   CONTROLES TÁCTILES
+========================================== */
+
+document.querySelectorAll(
+    ".control"
+).forEach(boton => {
+
+    boton.addEventListener(
+        "pointerdown",
+        function(event) {
+
+            event.preventDefault();
+
+            const direccion =
+                boton.dataset.dir;
+
+            moverJugador(direccion);
+        }
+    );
+
+});
+
+
+/* ==========================================
+   COMPROBAR ZONA SEGURA
+========================================== */
+
+function comprobarZonaSegura() {
+
+    const jugadorRect =
+        jugador.getBoundingClientRect();
+
+    const zonaRect =
+        zonaSegura.getBoundingClientRect();
+
+
+    const colision =
+        jugadorRect.left < zonaRect.right &&
+        jugadorRect.right > zonaRect.left &&
+        jugadorRect.top < zonaRect.bottom &&
+        jugadorRect.bottom > zonaRect.top;
+
+
+    if (colision) {
+
+        completarNivel();
+    }
+}
+
+
+/* ==========================================
+   COMPLETAR NIVEL
+========================================== */
+
+let nivelCompletado = false;
+
+
+function completarNivel() {
+
+    if (nivelCompletado) {
+        return;
+    }
+
+    nivelCompletado = true;
+
+    puntos += 100;
+
+    actualizarHUD();
+
+    puntosFinales.textContent =
+        puntos;
+
+    pantallaVictoria.classList.add("activo");
+
+    guardarProgreso();
+}
+
+
+/* ==========================================
+   SIGUIENTE NIVEL
+========================================== */
+
+function siguienteNivel() {
+
+    nivelCompletado = false;
+
+    pantallaVictoria.classList.remove("activo");
+
+    if (nivelActual < niveles.length) {
+
+        nivelActual++;
+
+        vidas = 3;
+
+        suministros = 5;
+
+        reiniciarPosicion();
+
+        actualizarHUD();
+
+        mostrarMensaje(
+            "🌧️ NIVEL " +
+            nivelActual +
+            ": " +
+            niveles[nivelActual - 1].nombre
+        );
+
+        guardarProgreso();
+
+    } else {
+
+        alert(
+            "🏆 ¡Has completado los 20 niveles!"
+        );
+
+        juegoActivo = false;
+
+        mostrarPantalla("inicio");
+    }
+}
+
+
+/* ==========================================
+   PERDER VIDA
+========================================== */
+
+function perderVida() {
+
+    if (juegoPausado) {
+        return;
+    }
+
+    vidas--;
+
+    actualizarHUD();
+
+    jugador.classList.add("daño");
+
+    setTimeout(() => {
+
+        jugador.classList.remove("daño");
+
+    }, 300);
+
+
+    if (vidas <= 0) {
+
+        perderPartida();
+
+    } else {
+
+        mostrarMensaje(
+            "⚠️ ¡Has perdido una vida!"
+        );
+    }
+}
+
+
+/* ==========================================
+   DERROTA
+========================================== */
+
+function perderPartida() {
+
+    juegoActivo = false;
+
+    pantallaDerrota.classList.add("activo");
+}
+
+
+/* ==========================================
+   MOSTRAR MENSAJE
+========================================== */
+
+function mostrarMensaje(texto) {
+
+    mensajeEvento.textContent = texto;
+
+    mensajeEvento.style.display = "block";
+
+    setTimeout(() => {
+
+        mensajeEvento.style.display =
+            "none";
+
+    }, 2500);
+}
+
+
+/* ==========================================
+   BOTONES DEL MENÚ
+========================================== */
+
+btnJugar.addEventListener(
+    "click",
+    iniciarJuego
+);
+
+
+btnContinuar.addEventListener(
+    "click",
+    continuarJuego
+);
+
+
+/* ==========================================
+   BOTÓN CÓMO JUGAR
+========================================== */
+
+document.getElementById(
+    "btnComoJugar"
+).addEventListener(
+    "click",
+    function() {
+
+        mostrarPantalla("comoJugar");
+
+    }
+);
+
+
+/* ==========================================
+   BOTÓN CRÉDITOS
+========================================== */
+
+document.getElementById(
+    "btnCreditos"
+).addEventListener(
+    "click",
+    function() {
+
+        mostrarPantalla("creditos");
+
+    }
+);
+
+
+/* ==========================================
+   BOTONES VOLVER
+========================================== */
+
+document.querySelectorAll(
+    "[data-volver]"
+).forEach(boton => {
+
+    boton.addEventListener(
+        "click",
+        function() {
+
+            mostrarPantalla(
+                boton.dataset.volver
+            );
+
+        }
+    );
+
+});
+
+
+/* ==========================================
+   PAUSA
+========================================== */
+
+btnPausa.addEventListener(
+    "click",
+    pausarJuego
+);
+
+
+btnReanudar.addEventListener(
+    "click",
+    reanudarJuego
+);
+
+
+btnReiniciar.addEventListener(
+    "click",
+    reiniciarNivel
+);
+
+
+btnGuardar.addEventListener(
+    "click",
+    guardarProgreso
+);
+
+
+btnSalir.addEventListener(
+    "click",
+    function() {
+
+        guardarProgreso();
+
+        juegoActivo = false;
+
+        juegoPausado = false;
+
+        pantallaPausa.classList.remove(
+            "activo"
+        );
+
+        mostrarPantalla("inicio");
+
+    }
+);
+
+
+/* ==========================================
+   VICTORIA
+========================================== */
+
+btnSiguiente.addEventListener(
+    "click",
+    siguienteNivel
+);
+
+
+/* ==========================================
+   DERROTA
+========================================== */
+
+btnIntentar.addEventListener(
+    "click",
+    function() {
+
+        pantallaDerrota.classList.remove(
+            "activo"
+        );
+
+        nivelCompletado = false;
+
+        vidas = 3;
+
+        suministros = 5;
+
+        juegoActivo = true;
+
+        reiniciarPosicion();
+
+        actualizarHUD();
+
+    }
+);
+
+
+btnDerrotaMenu.addEventListener(
+    "click",
+    function() {
+
+        pantallaDerrota.classList.remove(
+            "activo"
+        );
+
+        juegoActivo = false;
+
+        mostrarPantalla("inicio");
+
+    }
+);
+
+
+/* ==========================================
+   INICIO DEL SISTEMA
+========================================== */
+
+actualizarHUD();
+
+reiniciarPosicion();
+
+console.log(
+    "FEN FORCE 2.0 iniciado correctamente."
+);
